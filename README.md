@@ -62,3 +62,46 @@ a.toLowerCase() // 소문자로 변환, hello, world!
 a.trim() // 양쪽 공백 제거
 a.concat('!!') // 문자열 연결, Hello, World!!!
 ```
+
+## 코드 구현 꿀팁
+
+### 값 교환하기
+
+```js
+let a = 5
+let b = 10
+let temp
+
+temp = a
+a = b
+b = temp
+```
+
+```js
+let a = 5
+let b = 10
+[a, b] = [b, a]
+```
+
+### 배열 내 같은 요소 제거하기
+
+```js
+const names = ['Lee', 'Kim', 'Park', 'Lee', 'Kim']
+const uniqueNames = [...new Set(names)] // ['Lee', 'Kim', 'Park']
+```
+
+### && 와 || 연산자로 조건문 대체하기
+
+```js
+// func 함수는 flag가 true면 실행
+flag && func()
+
+// showAddress가 true면 객체 병합
+const array = {
+  name: 'hee',
+  ...showAddress && { address: 'Seoul' }
+}
+
+// participantName이 0, undefined, 빈 문자열, null 일 경우 'Guest' 할당
+const name = participantName || 'Guest'
+```
