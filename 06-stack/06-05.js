@@ -3,7 +3,35 @@
 // 주식가격
 // 10만 => O(N)
 
+// 간단하게 풀면 N + (N - 1) + (N - 2) + ... + 1 = N(N+1) / 2 = O(N^2)
 function solution (prices) {
+  const n = prices.length
+  const answer = Array(prices.length).fill(0)
+  const stack = [[0, prices[0]]]
+
+  for (let i = 0; i < n; i++) {
+    // const top = stack[stack.length - 1]
+    // const topIndex = top[0]
+    // const topValue = top[1]
+
+    while (stack.length > 0 && prices[i] < stack[stack.length - 1][1]) {
+      const top = stack.pop()
+      answer[top[0]] = i - top[0]
+    }
+    stack.push([i, prices[i]])
+  }
+
+  // 스택에 남아있는 가격들은 가격이 떨어지지 않은 경우임
+  while (stack.length > 0) {
+    const top = stack.pop()
+    const index = top[0]
+    answer[index] = (n - 1) - index
+  }
+
+  return answer
+}
+
+function solution2 (prices) {
   const n = prices.length
   const answer = Array(prices.length).fill(0)
   const stack = [0]
@@ -53,3 +81,7 @@ function mysolution (prices) {
 }
 
 console.log(solution([1, 2, 3, 2, 3])) // [4, 3, 1, 1, 0]
+console.log(solution([1, 2, 3, 1, 2, 3])) // [5,2,1,2,1,0]
+console.log(solution([3, 5, 2, 6, 7, 8, 1, 10, 9])) // [2, 1, 4, 3, 2, 1, 2, 1, 0]
+console.log(solution([4, 3, 2, 1])) // [1, 1, 1, 0]
+console.log(solution([5, 4, 3, 2, 1])) // [1, 1, 1, 1, 0]
