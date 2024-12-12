@@ -3,16 +3,16 @@
 
 function solution (id_list, report, k) {
   // { [신고당한사람]: [신고한사람1, 신고한사람2]}
-  const reports = {}
+  const reportHash = {}
 
   report.forEach((message) => {
     const [sender, receiver] = message.split(' ')
 
-    if (reports[receiver]) {
-      if (!reports[receiver].includes(sender))
-        reports[receiver].push(sender)
+    if (reportHash[receiver]) {
+      if (!reportHash[receiver].includes(sender))
+        reportHash[receiver].push(sender)
     } else {
-      reports[receiver] = [sender]
+      reportHash[receiver] = [sender]
     }
   })
 
@@ -21,7 +21,7 @@ function solution (id_list, report, k) {
     user[id] = 0
   })
 
-  Object.entries(reports)
+  Object.entries(reportHash)
     .filter(([_, senders]) => senders.length >= k)
     .forEach(([receiver, senders]) => {
       senders.forEach((sender) => {
